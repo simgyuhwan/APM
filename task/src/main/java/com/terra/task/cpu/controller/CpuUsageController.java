@@ -23,4 +23,6 @@ public class CpuUsageController {
 	public double getCpuUsage() {
 		return cpuUsageService.getCpuUsage();
 	}
+
+
 }

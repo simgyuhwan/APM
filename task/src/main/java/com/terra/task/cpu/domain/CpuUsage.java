@@ -26,9 +26,20 @@ public class CpuUsage {
 	@Column(name = "cpu_percentage", nullable = false)
 	private Double cpuPercentage;
 
-	public CpuUsage(Double cpuPercentage) {
-		this.timestamp = LocalDateTime.now();
-		this.cpuPercentage = Math.round(cpuPercentage * 100) / 100.0;
+	private CpuUsage(Double cpuPercentage) {
+		this.cpuPercentage = cpuPercentage;
 	}
 
+	private CpuUsage(LocalDateTime timestamp, Double cpuPercentage) {
+		this.timestamp = timestamp;
+		this.cpuPercentage = cpuPercentage;
+	}
+
+	public static CpuUsage of(Double cpuPercentage) {
+		return new CpuUsage(LocalDateTime.now(),cpuPercentage);
+	}
+
+	public static CpuUsage of(LocalDateTime timestamp, Double cpuPercentage) {
+		return new CpuUsage(timestamp,cpuPercentage);
+	}
 }
