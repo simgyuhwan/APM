@@ -9,9 +9,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "cpu_usage", indexes = @Index(name = "idx_timestamp", columnList = "timestamp"))
+@NoArgsConstructor
 public class CpuUsage {
 
 	@Id
@@ -21,11 +23,12 @@ public class CpuUsage {
 	@Column(name = "timestamp", nullable = false)
 	private LocalDateTime timestamp;
 
-	@Column(name = "cpu_percentabe", nullable = false)
+	@Column(name = "cpu_percentage", nullable = false)
 	private Double cpuPercentage;
 
 	public CpuUsage(Double cpuPercentage) {
 		this.timestamp = LocalDateTime.now();
 		this.cpuPercentage = Math.round(cpuPercentage * 100) / 100.0;
 	}
+
 }
