@@ -14,7 +14,7 @@ public interface CpuUsageRepository extends JpaRepository<CpuUsage, Long> {
    * 지정한 기간 내의 분당 CPU 사용률을 조회할 수 있습니다.
    *
    * @param startDateTime 시작 날짜
-   * @param endDateTime
+   * @param endDateTime   종료 날짜
    * @return 분당 CPU 사용률 List
    */
   @Query("SELECT c FROM CpuUsage c WHERE c.timestamp BETWEEN :startDateTime AND :endDateTime")
@@ -37,6 +37,17 @@ public interface CpuUsageRepository extends JpaRepository<CpuUsage, Long> {
           + " GROUP BY CAST(DATE_FORMAT(c.timestamp, '%Y-%m-%d %H') AS LocalDateTime)"
           + " ORDER BY CAST(DATE_FORMAT(c.timestamp, '%Y-%m-%d %H') AS LocalDateTime)")
   List<CpuStats> findHourlyCpuUsageStatsByDate(@Param("startDateTime") LocalDateTime startDateTime,
+      @Param("endDateTime") LocalDateTime endDateTime);
+
+  @Query(
+      "SELECT new com.terra.task.cpu.domain.CpuStats("
+          + "CAST(DATE_FORMAT(c.timestamp, '%Y-%m-%d') AS LocalDateTime), "
+          + "MAX(c.cpuPercentage), MIN(c.cpuPercentage), CAST(AVG(c.cpuPercentage) AS BigDecimal))"
+          + " FROM CpuUsage c"
+          + " WHERE c.timestamp BETWEEN :startDateTime AND :endDateTime"
+          + " GROUP BY CAST(DATE_FORMAT(c.timestamp, '%Y-%m-%d') AS LocalDateTime)"
+          + " ORDER BY CAST(DATE_FORMAT(c.timestamp, '%Y-%m-%d') AS LocalDateTime)")
+  List<CpuStats> findDailyCpuUsageStatsByDate(@Param("startDateTime") LocalDateTime startDateTime,
       @Param("endDateTime") LocalDateTime endDateTime);
 
 }

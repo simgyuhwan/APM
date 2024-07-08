@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.terra.task.cpu.config.CommonConfig;
 import com.terra.task.cpu.domain.CpuStats;
 import com.terra.task.cpu.domain.CpuUsage;
+import com.terra.task.cpu.util.DataSQLGenerator;
 import com.terra.task.cpu.util.RandomValueGenerator;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,10 +20,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+@Sql("classpath:db/data.sql")
 @Testcontainers
 @Import(CommonConfig.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -33,8 +36,6 @@ class CpuUsageRepositoryTest {
   @Container
   static MySQLContainer<?> mySQLContainer = new MySQLContainer<>("mysql:8.0.32")
       .withDatabaseName("terra");
-//      .withCommand(
-//          "--sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION");
 
   @Autowired
   CpuUsageRepository cpuUsageRepository;
@@ -43,17 +44,26 @@ class CpuUsageRepositoryTest {
   Random random;
 
   @Test
-  void 지정한_구간내의_시_단위_CPU사용률_최소값_최대값_평균값을_조회할수있다() {
+  void 지정한_구간내의_일_단위_CPU_사용률의_최소_최대_평균값을_조회할수있다() {
     // given
-    LocalDateTime startDateTime = LocalDateTime.of(2024, 1, 1, 10, 1);
-    CpuUsage cpuUsage1 = CpuUsage.of(startDateTime.plusMinutes(1), new BigDecimal(10));
-    CpuUsage cpuUsage2 = CpuUsage.of(startDateTime.plusMinutes(1), new BigDecimal(30));
-    CpuUsage cpuUsage3 = CpuUsage.of(startDateTime.plusMinutes(1), new BigDecimal(50));
+
+    // when
+
+    // then
+  }
+
+  @Test
+  void 지정한_구간내의_시_단위_CPU_사용률의_최소_최대_평균을_조회할수있다() {
+    // given
+    LocalDateTime startDate = LocalDateTime.of(2024, 1, 1, 10, 1);
+    CpuUsage cpuUsage1 = CpuUsage.of(startDate.plusMinutes(1), new BigDecimal(10));
+    CpuUsage cpuUsage2 = CpuUsage.of(startDate.plusMinutes(1), new BigDecimal(30));
+    CpuUsage cpuUsage3 = CpuUsage.of(startDate.plusMinutes(1), new BigDecimal(50));
     cpuUsageRepository.saveAll(List.of(cpuUsage1, cpuUsage2, cpuUsage3));
 
     // when
-    List<CpuStats> cpuStatsList = cpuUsageRepository.findHourlyCpuUsageStatsByDate(startDateTime,
-        startDateTime.plusHours(1));
+    List<CpuStats> cpuStatsList = cpuUsageRepository.findHourlyCpuUsageStatsByDate(startDate,
+        startDate.plusHours(1));
 
     // then
     CpuStats cpuStats = cpuStatsList.get(0);
@@ -66,15 +76,14 @@ class CpuUsageRepositoryTest {
   @Test
   void 지정한_구간내의_분_단위_CPU_사용률을_조회할_수_있다() {
     // given
-    LocalDateTime startDateTime = LocalDateTime.of(2024, 1, 1, 10, 1);
-    LocalDateTime endDateTime = LocalDateTime.of(2024, 1, 1, 11, 1);
-    insertCpuUsageDataForMinuteRange(startDateTime, endDateTime);
+    LocalDateTime startDate = DataSQLGenerator.START_DATE;
+    LocalDateTime endDate = startDate.plusMinutes(60);
 
     // when
-    List<CpuUsage> cpuUsageList = cpuUsageRepository.findMinuteCpuUsage(startDateTime, endDateTime);
+    List<CpuUsage> cpuUsageList = cpuUsageRepository.findMinuteCpuUsage(startDate, endDate);
 
     // then
-    assertThat(cpuUsageList).hasSize(60);
+    assertThat(cpuUsageList).hasSize(61);
   }
 
   /**
