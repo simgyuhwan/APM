@@ -2,6 +2,7 @@ package com.terra.task.cpu.service;
 
 import java.lang.management.ManagementFactory;
 
+import java.math.BigDecimal;
 import org.springframework.stereotype.Service;
 
 import com.sun.management.OperatingSystemMXBean;
@@ -14,8 +15,9 @@ public class CpuUsageService {
 		this.systemMXBean = (OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
 	}
 
-	public double getCpuUsage() {
-		return systemMXBean.getProcessCpuLoad() * 100;
+	public BigDecimal getCpuUsage() {
+		double cpuUsage = systemMXBean.getProcessCpuLoad() * 100;
+		return new BigDecimal(cpuUsage);
 	}
 }
 

@@ -1,0 +1,22 @@
+DELIMITER $$
+
+CREATE PROCEDURE InsertCpuUsageData()
+BEGIN
+    DECLARE currentTime TIMESTAMP;
+    DECLARE endTime TIMESTAMP;
+    DECLARE cpuPercentage DECIMAL(5, 2);
+
+    SET currentTime = '2024-03-01 00:00:00';
+    SET endTime = '2024-07-07 23:59:00';
+
+    WHILE currentTime <= endTime DO
+        SET cpuPercentage = ROUND(RAND() * 100, 1); -- 0.0에서 100.0 사이의 랜덤 값 생성
+        INSERT INTO cpu_usage (timestamp, cpu_percentage) VALUES (currentTime, cpuPercentage);
+        SET currentTime = DATE_ADD(currentTime, INTERVAL 1 MINUTE);
+    END WHILE;
+END$$
+
+DELIMITER ;
+
+-- 프로시저 실행
+CALL InsertCpuUsageData();

@@ -1,5 +1,8 @@
 package com.terra.task.cpu.domain;
 
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -20,26 +23,26 @@ public class CpuUsage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "timestamp", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime timestamp;
 
-	@Column(name = "cpu_percentage", nullable = false)
-	private Double cpuPercentage;
+	@Column(name = "cpu_percentage", nullable = false, precision = 5, scale = 1)
+	private BigDecimal cpuPercentage;
 
-	private CpuUsage(Double cpuPercentage) {
+	private CpuUsage(BigDecimal cpuPercentage) {
 		this.cpuPercentage = cpuPercentage;
 	}
 
-	private CpuUsage(LocalDateTime timestamp, Double cpuPercentage) {
+	private CpuUsage(LocalDateTime timestamp, BigDecimal cpuPercentage) {
 		this.timestamp = timestamp;
 		this.cpuPercentage = cpuPercentage;
 	}
 
-	public static CpuUsage of(Double cpuPercentage) {
+	public static CpuUsage of(BigDecimal cpuPercentage) {
 		return new CpuUsage(LocalDateTime.now(),cpuPercentage);
 	}
 
-	public static CpuUsage of(LocalDateTime timestamp, Double cpuPercentage) {
+	public static CpuUsage of(LocalDateTime timestamp, BigDecimal cpuPercentage) {
 		return new CpuUsage(timestamp,cpuPercentage);
 	}
 }

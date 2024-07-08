@@ -1,5 +1,6 @@
 package com.terra.task.cpu.schedule;
 
+import java.math.BigDecimal;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,7 @@ public class CpuUsageScheduler {
 
 	@Scheduled(fixedDelay = 60000)
 	public void run() {
-		double cpuUsagePercent = cpuUsageService.getCpuUsage();
+		BigDecimal cpuUsagePercent = cpuUsageService.getCpuUsage();
 		CpuUsage cpuUsage = CpuUsage.of(cpuUsagePercent);
 		cpuUsageRepository.save(cpuUsage);
 	}

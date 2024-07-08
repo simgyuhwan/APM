@@ -1,14 +1,16 @@
 package com.terra.task.cpu.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.terra.task.cpu.config.CommonConfig;
 import com.terra.task.cpu.domain.CpuUsage;
 import com.terra.task.cpu.util.RandomValueGenerator;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -37,7 +39,7 @@ class CpuUsageRepositoryTest {
     List<CpuUsage> cpuUsageList = cpuUsageRepository.findMinuteCpuUsage(startDateTime, endDateTime);
 
     // then
-    Assertions.assertThat(cpuUsageList).hasSize(60);
+    assertThat(cpuUsageList).hasSize(60);
   }
 
   /**
@@ -52,7 +54,7 @@ class CpuUsageRepositoryTest {
 
     for(int minute = 0; minute < minuteBetween; minute++) {
       LocalDateTime nextDay = startDateTime.plusMinutes(minute);
-      double cpuUsage = RandomValueGenerator.generateRandomValue(random);
+      BigDecimal cpuUsage = RandomValueGenerator.generateRandomValue(random);
       cpuUsageList.add(CpuUsage.of(nextDay, cpuUsage));
     }
     cpuUsageRepository.saveAll(cpuUsageList);
