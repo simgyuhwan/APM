@@ -47,10 +47,10 @@ class CpuUsageRepositoryTest {
    * @param endDateTime 종료 시간
    */
   void insertCpuUsageDataForMinuteRange(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-    long dayBetween = ChronoUnit.MINUTES.between(startDateTime, endDateTime);
+    long minuteBetween = ChronoUnit.MINUTES.between(startDateTime, endDateTime);
     List<CpuUsage> cpuUsageList = new ArrayList<>();
 
-    for(int minute = 0; minute < dayBetween; minute++) {
+    for(int minute = 0; minute < minuteBetween; minute++) {
       LocalDateTime nextDay = startDateTime.plusMinutes(minute);
       double cpuUsage = RandomValueGenerator.generateRandomValue(random);
       cpuUsageList.add(CpuUsage.of(nextDay, cpuUsage));
