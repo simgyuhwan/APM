@@ -2,23 +2,17 @@ package com.terra.task.cpu.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.terra.task.cpu.config.CommonConfig;
 import com.terra.task.cpu.domain.CpuStats;
 import com.terra.task.cpu.domain.CpuUsage;
 import com.terra.task.cpu.util.DataSQLGenerator;
-import com.terra.task.cpu.util.RandomValueGenerator;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.MySQLContainer;
@@ -27,7 +21,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Sql("classpath:db/data.sql")
 @Testcontainers
-@Import(CommonConfig.class)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles("test")
 @DataJpaTest
@@ -39,9 +32,6 @@ class CpuUsageRepositoryTest {
 
   @Autowired
   CpuUsageRepository cpuUsageRepository;
-
-  @Autowired
-  Random random;
 
   @Test
   void 지정한_구간내의_일_단위_CPU_사용률의_최소_최대_평균값을_조회할수있다() {
@@ -99,24 +89,6 @@ class CpuUsageRepositoryTest {
 
     // then
     assertThat(cpuUsageList).hasSize(3);
-  }
-
-  /**
-   * 지정한 시간 범위 동안의 CPU 사용량 데이터를 랜덤 값으로 생성하여 저장합니다.
-   *
-   * @param startDateTime 시작 시간
-   * @param endDateTime   종료 시간
-   */
-  void insertCpuUsageDataForMinuteRange(LocalDateTime startDateTime, LocalDateTime endDateTime) {
-    long minuteBetween = ChronoUnit.MINUTES.between(startDateTime, endDateTime);
-    List<CpuUsage> cpuUsageList = new ArrayList<>();
-
-    for (int minute = 0; minute < minuteBetween; minute++) {
-      LocalDateTime nextDay = startDateTime.plusMinutes(minute);
-      BigDecimal cpuUsage = RandomValueGenerator.generateRandomValue(random);
-      cpuUsageList.add(CpuUsage.of(nextDay, cpuUsage));
-    }
-    cpuUsageRepository.saveAll(cpuUsageList);
   }
 
 }
