@@ -95,7 +95,7 @@ class CpuUsageRepositoryTest {
     LocalDateTime endDate = startDate.plusMinutes(3);
 
     // when
-    List<CpuUsage> cpuUsageList = cpuUsageRepository.findMinuteCpuUsage(startDate, endDate);
+    List<CpuUsage> cpuUsageList = cpuUsageRepository.findMinuteCpuUsageByDate(startDate, endDate);
 
     // then
     assertThat(cpuUsageList).hasSize(3);

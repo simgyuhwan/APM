@@ -18,7 +18,7 @@ public interface CpuUsageRepository extends JpaRepository<CpuUsage, Long> {
    * @return 분당 CPU 사용률 List
    */
   @Query("SELECT c FROM CpuUsage c WHERE c.timestamp BETWEEN :startDateTime AND :endDateTime")
-  List<CpuUsage> findMinuteCpuUsage(@Param("startDateTime") LocalDateTime startDateTime,
+  List<CpuUsage> findMinuteCpuUsageByDate(@Param("startDateTime") LocalDateTime startDateTime,
       @Param("endDateTime") LocalDateTime endDateTime);
 
   /**
