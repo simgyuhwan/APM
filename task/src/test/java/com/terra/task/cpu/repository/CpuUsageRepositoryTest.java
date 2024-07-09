@@ -46,10 +46,25 @@ class CpuUsageRepositoryTest {
   @Test
   void 지정한_구간내의_일_단위_CPU_사용률의_최소_최대_평균값을_조회할수있다() {
     // given
+    LocalDateTime startDate = DataSQLGenerator.START_DATE;
+    LocalDateTime endDate = startDate.plusDays(3);
+
+    BigDecimal expectedMin = new BigDecimal("10.0");
+    BigDecimal expectedMax = new BigDecimal("80.0");
+    BigDecimal expectedAvg = new BigDecimal("40.00");
 
     // when
+    List<CpuStats> cpuStatsList = cpuUsageRepository.findDailyCpuUsageStatsByDate(startDate,
+        endDate);
 
     // then
+    assertThat(cpuStatsList).isNotEmpty();
+    assertThat(cpuStatsList).hasSize(3);
+
+    CpuStats cpuStats = cpuStatsList.get(0);
+    assertThat(cpuStats.maxUsage()).isEqualTo(expectedMax);
+    assertThat(cpuStats.minUsage()).isEqualTo(expectedMin);
+    assertThat(cpuStats.avgUsage()).isEqualTo(expectedAvg);
   }
 
   @Test
@@ -77,13 +92,13 @@ class CpuUsageRepositoryTest {
   void 지정한_구간내의_분_단위_CPU_사용률을_조회할_수_있다() {
     // given
     LocalDateTime startDate = DataSQLGenerator.START_DATE;
-    LocalDateTime endDate = startDate.plusMinutes(60);
+    LocalDateTime endDate = startDate.plusMinutes(3);
 
     // when
     List<CpuUsage> cpuUsageList = cpuUsageRepository.findMinuteCpuUsage(startDate, endDate);
 
     // then
-    assertThat(cpuUsageList).hasSize(61);
+    assertThat(cpuUsageList).hasSize(3);
   }
 
   /**
