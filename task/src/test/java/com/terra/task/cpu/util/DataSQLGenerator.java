@@ -14,8 +14,8 @@ public class DataSQLGenerator {
 
   private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(
       "yyyy-MM-dd HH:mm:ss");
-  public static final LocalDateTime START_DATE = LocalDateTime.of(2024, 7, 6, 0, 0);
-  public static final LocalDateTime END_DATE = LocalDateTime.of(2024, 7, 8, 23, 59);
+  public static final LocalDateTime START_DATE = LocalDateTime.of(2024, 5, 6, 0, 0);
+  public static final LocalDateTime END_DATE = LocalDateTime.of(2024, 5, 8, 23, 59);
 
   private static final Random RANDOM = new Random();
   private static final String OUTPUT_FILE_PATH = "src/test/resources/db/data.sql";
