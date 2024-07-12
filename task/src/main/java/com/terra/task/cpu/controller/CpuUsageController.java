@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,9 +34,10 @@ public class CpuUsageController {
   @Operation(summary = "시단위 CPU 사용량 조회", description = "시단위 CPU 사용량 조회 기능")
   @GetMapping("/usage")
   public List<CpuStats> getCpuUsage(
-      @RequestParam("startDateTime") LocalDateTime startDateTime,
-      @RequestParam("endDateTime") LocalDateTime endDateTime, @RequestParam("dateType")
-  LimitDateType dateType) {
+      @RequestParam("startDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDateTime,
+      @RequestParam("endDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDateTime,
+      @RequestParam("dateType")
+      LimitDateType dateType) {
     return cpuUsageService.findCpuUsage(startDateTime, endDateTime, dateType);
   }
 

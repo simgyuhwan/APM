@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ public class CpuUsageService {
 
   private final CpuUsageRepository cpuUsageRepository;
 
+  @Transactional(readOnly = true)
   public List<CpuUsageRsp> findMinutesCpuUsage(LocalDateTime startDateTime,
       LocalDateTime endDateTime) {
     LocalDateTime limitDateTime = LocalDateTime.now()
@@ -31,6 +33,7 @@ public class CpuUsageService {
         .toList();
   }
 
+  @Transactional(readOnly = true)
   public List<CpuStats> findCpuUsage(LocalDateTime startDateTime,
       LocalDateTime endDateTime, LimitDateType dateType) {
     validateDateRange(startDateTime, endDateTime);
