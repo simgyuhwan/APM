@@ -1,10 +1,13 @@
 package com.terra.task.cpu.service;
 
 import com.terra.task.cpu.domain.CpuUsage;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record CpuUsageRsp(LocalDateTime date, BigDecimal cpuPercentage) {
+@Schema(description = "CPU 사용량 응답 모델")
+public record CpuUsageRsp(@Schema(description = "시간") LocalDateTime date,
+                          @Schema(description = "사용량") BigDecimal cpuPercentage) {
 
   public static CpuUsageRsp from(CpuUsage cpuUsage) {
     return new CpuUsageRsp(cpuUsage.getTimestamp(), cpuUsage.getCpuPercentage());

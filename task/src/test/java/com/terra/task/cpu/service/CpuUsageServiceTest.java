@@ -1,16 +1,23 @@
 package com.terra.task.cpu.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.terra.task.TaskApplication;
+import com.terra.task.cpu.constants.LimitDateType;
 import com.terra.task.cpu.domain.CpuStats;
 import com.terra.task.cpu.domain.CpuUsage;
+import com.terra.task.cpu.exception.InvalidDateRangeException;
 import com.terra.task.cpu.repository.CpuUsageRepository;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
@@ -32,7 +39,7 @@ class CpuUsageServiceTest {
   CpuUsageRepository cpuUsageRepository;
 
   @Test
-  void 일단위_CPU_사용률조회는_최근_1년_데이터만_조회핧수있다() {
+  void 일단위_CPU_사용률조회는_최근_1년_데이터만_조회한다() {
     // given
     LocalDateTime currentDateTime = LocalDateTime.now();
     LocalDateTime fourMonthsAgoDateTime = currentDateTime.minusYears(2);
@@ -43,8 +50,8 @@ class CpuUsageServiceTest {
     cpuUsageRepository.saveAll(List.of(cpuUsageCurrent, cpuUsageFourMonthsAgo));
 
     // when
-    List<CpuStats> cpuStatsList = cpuUsageService.findHoursCpuUsage(fourMonthsAgoDateTime,
-        currentDateTime);
+    List<CpuStats> cpuStatsList = cpuUsageService.findCpuUsage(fourMonthsAgoDateTime,
+        currentDateTime, LimitDateType.DAYS);
 
     // then
     assertThat(cpuStatsList).hasSize(1);
@@ -52,7 +59,7 @@ class CpuUsageServiceTest {
 
 
   @Test
-  void 지정한_날짜구간의_일단위_CPU_사용률을_조회할수있다() {
+  void 지정한_날짜구간의_일단위_CPU_사용률을_조회한다() {
     // given
     LocalDateTime currentDateTime = LocalDateTime.now();
     LocalDateTime monthsAgeDateTime = currentDateTime.minusMonths(11);
@@ -63,15 +70,15 @@ class CpuUsageServiceTest {
     cpuUsageRepository.saveAll(List.of(cpuUsageCurrent, cpuUsageMonthsAge));
 
     // when
-    List<CpuStats> cpuStatsList = cpuUsageService.findDailyCpuUsage(monthsAgeDateTime,
-        currentDateTime);
+    List<CpuStats> cpuStatsList = cpuUsageService.findCpuUsage(monthsAgeDateTime,
+        currentDateTime, LimitDateType.DAYS);
 
     // then
     assertThat(cpuStatsList).hasSize(2);
   }
 
   @Test
-  void 시단위_CPU_사용률조회는_최근_3달_데이터만_조회핧수있다() {
+  void 시단위_CPU_사용률조회는_최근_3달_데이터만_조회한다() {
     // given
     LocalDateTime currentDateTime = LocalDateTime.now();
     LocalDateTime fourMonthsAgoDateTime = currentDateTime.minusMonths(4);
@@ -82,15 +89,15 @@ class CpuUsageServiceTest {
     cpuUsageRepository.saveAll(List.of(cpuUsageCurrent, cpuUsageFourMonthsAgo));
 
     // when
-    List<CpuStats> cpuStatsList = cpuUsageService.findHoursCpuUsage(fourMonthsAgoDateTime,
-        currentDateTime);
+    List<CpuStats> cpuStatsList = cpuUsageService.findCpuUsage(fourMonthsAgoDateTime,
+        currentDateTime, LimitDateType.HOURS);
 
     // then
     assertThat(cpuStatsList).hasSize(1);
   }
 
   @Test
-  void 지정한_날짜구간의_시간단위_CPU_사용률을_조회할수있다() {
+  void 지정한_날짜구간의_시간단위_CPU_사용률을_조회한다() {
     // given
     LocalDateTime currentDateTime = LocalDateTime.now();
     LocalDateTime monthsAgeDateTime = currentDateTime.minusDays(25);
@@ -101,8 +108,8 @@ class CpuUsageServiceTest {
     cpuUsageRepository.saveAll(List.of(cpuUsageCurrent, cpuUsageMonthsAge));
 
     // when
-    List<CpuStats> cpuStatsList = cpuUsageService.findHoursCpuUsage(monthsAgeDateTime,
-        currentDateTime);
+    List<CpuStats> cpuStatsList = cpuUsageService.findCpuUsage(monthsAgeDateTime,
+        currentDateTime, LimitDateType.DAYS);
 
     // then
     assertThat(cpuStatsList).hasSize(2);
@@ -130,7 +137,34 @@ class CpuUsageServiceTest {
   }
 
   @Test
-  void 지정한_시간_구간의_분_단위_CPU_사용률을_조회할수_있다() {
+  void 시작날짜가_종료날짜보다_뒤에_있으면_예외가_발생한다() {
+    // given
+    LocalDateTime endDateTime = LocalDateTime.now().minusDays(10);
+    LocalDateTime startDateTime = endDateTime.plusDays(3);
+
+    // when, then
+    assertThatThrownBy(
+        () -> cpuUsageService.findCpuUsage(startDateTime, endDateTime, LimitDateType.DAYS))
+        .isInstanceOf(InvalidDateRangeException.class);
+  }
+
+  @ParameterizedTest
+  @MethodSource("provideInvalidDateData")
+  void 잘못된_날짜가_들어오면_예외가_발생한다(LocalDateTime startDate, LocalDateTime endDate) {
+    assertThatThrownBy(() -> cpuUsageService.findCpuUsage(startDate, endDate, LimitDateType.DAYS))
+        .isInstanceOf(InvalidDateRangeException.class);
+  }
+
+  private static Stream<Arguments> provideInvalidDateData() {
+    return Stream.of(
+        Arguments.of(null, LocalDateTime.now()),
+        Arguments.of(LocalDateTime.now(), null),
+        Arguments.of(null, null)
+    );
+  }
+
+  @Test
+  void 지정한_시간_구간의_분_단위_CPU_사용률을_조회한다() {
     // given
     LocalDateTime startDateTime = LocalDateTime.now().minusMinutes(3);
     LocalDateTime endDateTime = startDateTime.plusMinutes(3);

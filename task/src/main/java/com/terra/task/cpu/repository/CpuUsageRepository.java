@@ -39,6 +39,14 @@ public interface CpuUsageRepository extends JpaRepository<CpuUsage, Long> {
   List<CpuStats> findHourlyCpuUsageStatsByDate(@Param("startDateTime") LocalDateTime startDateTime,
       @Param("endDateTime") LocalDateTime endDateTime);
 
+
+  /**
+   * 지정한 기간 내의 일별 CPU 사용률의 최대값, 최소값, 평균값을 조회할 수 있습니다.
+   *
+   * @param startDateTime 시작 날짜
+   * @param endDateTime   종료 날짜
+   * @return 일별 CPU 정보 List
+   */
   @Query(
       "SELECT new com.terra.task.cpu.domain.CpuStats("
           + "CAST(DATE_FORMAT(c.timestamp, '%Y-%m-%d') AS LocalDateTime), "
