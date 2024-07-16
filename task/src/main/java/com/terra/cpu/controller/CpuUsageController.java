@@ -1,9 +1,10 @@
-package com.terra.task.cpu.controller;
+package com.terra.cpu.controller;
 
-import com.terra.task.cpu.constants.LimitDateType;
-import com.terra.task.cpu.domain.CpuStats;
-import com.terra.task.cpu.service.CpuUsageRsp;
-import com.terra.task.cpu.service.CpuUsageService;
+import com.influxdb.client.InfluxDBClient;
+import com.terra.cpu.constants.LimitDateType;
+import com.terra.cpu.domain.CpuStats;
+import com.terra.cpu.service.CpuUsageRsp;
+import com.terra.cpu.service.CpuUsageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CpuUsageController {
 
   private final CpuUsageService cpuUsageService;
+  private final InfluxDBClient influxDBClient;
 
   @Operation(summary = "분단위 CPU 사용량 조회", description = "분단위 CPU 사용량 조회 기능")
   @GetMapping("/usage/minutes")

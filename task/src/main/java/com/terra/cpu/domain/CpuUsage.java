@@ -1,4 +1,4 @@
-package com.terra.task.cpu.domain;
+package com.terra.cpu.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

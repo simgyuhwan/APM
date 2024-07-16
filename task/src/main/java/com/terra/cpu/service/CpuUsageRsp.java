@@ -1,6 +1,6 @@
-package com.terra.task.cpu.service;
+package com.terra.cpu.service;
 
-import com.terra.task.cpu.domain.CpuUsage;
+import com.terra.cpu.domain.CpuUsage;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

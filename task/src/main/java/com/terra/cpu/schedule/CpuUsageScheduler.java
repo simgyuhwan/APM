@@ -1,8 +1,8 @@
-package com.terra.task.cpu.schedule;
+package com.terra.cpu.schedule;
 
-import com.terra.task.cpu.domain.CpuUsage;
-import com.terra.task.cpu.repository.CpuUsageRepository;
-import com.terra.task.cpu.service.SystemStatsInfo;
+import com.terra.cpu.domain.CpuUsage;
+import com.terra.cpu.repository.CpuUsageRepository;
+import com.terra.cpu.service.SystemStatsInfo;
 import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

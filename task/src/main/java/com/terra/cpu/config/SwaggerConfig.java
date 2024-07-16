@@ -1,4 +1,4 @@
-package com.terra.task.cpu.config;
+package com.terra.cpu.config;
 
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -12,15 +12,15 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
 
   @Bean
-  public GroupedOpenApi publicApi(){
-   return GroupedOpenApi.builder()
-       .group("APM")
-       .pathsToMatch("/**")
-       .build();
+  public GroupedOpenApi publicApi() {
+    return GroupedOpenApi.builder()
+        .group("APM")
+        .pathsToMatch("/**")
+        .build();
   }
 
   @Bean
-  public GroupedOpenApi adminApi(){
+  public GroupedOpenApi adminApi() {
     return GroupedOpenApi.builder()
         .group("APM-ADMIN")
         .pathsToMatch("/admin/**")

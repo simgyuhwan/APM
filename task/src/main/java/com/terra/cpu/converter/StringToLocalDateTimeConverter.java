@@ -1,4 +1,4 @@
-package com.terra.task.cpu.converter;
+package com.terra.cpu.converter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

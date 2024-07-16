@@ -2,8 +2,9 @@ package com.terra.task.cpu.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.terra.task.cpu.domain.CpuStats;
-import com.terra.task.cpu.domain.CpuUsage;
+import com.terra.cpu.domain.CpuStats;
+import com.terra.cpu.domain.CpuUsage;
+import com.terra.cpu.repository.CpuUsageRepository;
 import com.terra.task.cpu.util.DataSQLGenerator;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

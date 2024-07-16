@@ -1,6 +1,6 @@
-package com.terra.task.cpu.advice;
+package com.terra.cpu.advice;
 
-import com.terra.task.cpu.exception.InvalidDateRangeException;
+import com.terra.cpu.exception.InvalidDateRangeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

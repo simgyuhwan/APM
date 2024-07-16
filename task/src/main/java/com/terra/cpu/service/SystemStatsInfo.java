@@ -1,7 +1,7 @@
-package com.terra.task.cpu.service;
+package com.terra.cpu.service;
 
 import com.sun.management.OperatingSystemMXBean;
-import com.terra.task.cpu.repository.CpuUsageRepository;
+import com.terra.cpu.repository.CpuUsageRepository;
 import java.lang.management.ManagementFactory;
 import java.math.BigDecimal;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
-package com.terra.task.cpu.repository;
+package com.terra.cpu.repository;
 
-import com.terra.task.cpu.domain.CpuStats;
-import com.terra.task.cpu.domain.CpuUsage;
+import com.terra.cpu.domain.CpuStats;
+import com.terra.cpu.domain.CpuUsage;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,7 +29,7 @@ public interface CpuUsageRepository extends JpaRepository<CpuUsage, Long> {
    * @return 시간별 CPU 정보 List
    */
   @Query(
-      "SELECT new com.terra.task.cpu.domain.CpuStats("
+      "SELECT new com.terra.cpu.domain.CpuStats("
           + "CAST(DATE_FORMAT(c.timestamp, '%Y-%m-%d %H') AS LocalDateTime), "
           + "MAX(c.cpuPercentage), MIN(c.cpuPercentage), CAST(AVG(c.cpuPercentage) AS BigDecimal))"
           + " FROM CpuUsage c"
@@ -48,7 +48,7 @@ public interface CpuUsageRepository extends JpaRepository<CpuUsage, Long> {
    * @return 일별 CPU 정보 List
    */
   @Query(
-      "SELECT new com.terra.task.cpu.domain.CpuStats("
+      "SELECT new com.terra.cpu.domain.CpuStats("
           + "CAST(DATE_FORMAT(c.timestamp, '%Y-%m-%d') AS LocalDateTime), "
           + "MAX(c.cpuPercentage), MIN(c.cpuPercentage), CAST(AVG(c.cpuPercentage) AS BigDecimal))"
           + " FROM CpuUsage c"

@@ -1,4 +1,4 @@
-package com.terra.task.cpu.constants;
+package com.terra.cpu.constants;
 
 import java.time.LocalDateTime;
 

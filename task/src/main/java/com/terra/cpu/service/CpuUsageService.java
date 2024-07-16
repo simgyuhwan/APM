@@ -1,10 +1,10 @@
-package com.terra.task.cpu.service;
+package com.terra.cpu.service;
 
-import com.terra.task.cpu.constants.ApiTimeLimits;
-import com.terra.task.cpu.constants.LimitDateType;
-import com.terra.task.cpu.domain.CpuStats;
-import com.terra.task.cpu.exception.InvalidDateRangeException;
-import com.terra.task.cpu.repository.CpuUsageRepository;
+import com.terra.cpu.constants.ApiTimeLimits;
+import com.terra.cpu.constants.LimitDateType;
+import com.terra.cpu.domain.CpuStats;
+import com.terra.cpu.exception.InvalidDateRangeException;
+import com.terra.cpu.repository.CpuUsageRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

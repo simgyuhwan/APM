@@ -1,4 +1,4 @@
-package com.terra.task.cpu.exception;
+package com.terra.cpu.exception;
 
 public class InvalidDateRangeException extends RuntimeException {
 
