@@ -13,9 +13,9 @@ public class InfluxDBAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public InfluxDBClient influxDBClient(InfluxDBProperties properties) {
-    return InfluxDBClientFactory.create(properties.getUrl(), properties.getUsername(),
-        properties.getPassword().toCharArray());
+  public InfluxDBClient influxDBClient(InfluxDBProperties prop) {
+    return InfluxDBClientFactory.create(prop.getUrl(), prop.getToken().toCharArray(), prop.getOrg(),
+        prop.getBucket());
   }
 
 }

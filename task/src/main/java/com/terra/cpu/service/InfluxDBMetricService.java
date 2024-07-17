@@ -2,8 +2,9 @@ package com.terra.cpu.service;
 
 import com.influxdb.client.InfluxDBClient;
 import com.terra.cpu.domain.Metric;
-import com.terra.cpu.domain.Metric.MetricType;
-import java.math.BigDecimal;
+import com.terra.cpu.domain.MetricType;
+import java.util.List;
+import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,9 @@ public class InfluxDBMetricService implements MetricService {
   }
 
   @Override
-  public BigDecimal getMetricValue(MetricType type) {
-    return BigDecimal.TEN;
+  public <T, R extends Metric> List<R> queryMetrics(MetricType type, String start, String stop,
+      Function<T, R> mapper) {
+
+    return null;
   }
 }

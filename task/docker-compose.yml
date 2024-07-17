@@ -12,5 +12,6 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=Password!
       - DOCKER_INFLUXDB_INIT_ORG=apm-org
       - DOCKER_INFLUXDB_INIT_BUCKET=apm-bucket
+      - DOCKER_INFLUXDB_INIT_CLI_CONFIG_NAME=myconfig
     volumes:
-      - /data:/var/lib/influxdb2
+      - ./data:/var/lib/influxdb2
