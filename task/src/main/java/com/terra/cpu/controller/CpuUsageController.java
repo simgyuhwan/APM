@@ -1,10 +1,7 @@
 package com.terra.cpu.controller;
 
 import com.terra.cpu.constants.LimitDateType;
-import com.terra.cpu.controller.response.CpuMetricResponse;
-import com.terra.cpu.controller.response.MemMetricResponse;
 import com.terra.cpu.domain.CpuStats;
-import com.terra.cpu.repository.MetricRepository;
 import com.terra.cpu.service.CpuUsageRsp;
 import com.terra.cpu.service.CpuUsageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class CpuUsageController {
 
   private final CpuUsageService cpuUsageService;
-  private final MetricRepository metricRepository;
 
   @Operation(summary = "분단위 CPU 사용량 조회", description = "분단위 CPU 사용량 조회 기능")
   @GetMapping("/usage/minutes")
@@ -45,13 +41,4 @@ public class CpuUsageController {
     return cpuUsageService.findCpuUsage(startDateTime, endDateTime, dateType);
   }
 
-  @GetMapping("/test/cpu")
-  public List<CpuMetricResponse> getTestCpuMetric() {
-    return metricRepository.queryCpuMetric("2024-07-18T05:50:00Z", "2024-07-18T06:55:00Z");
-  }
-
-  @GetMapping("/test/mem")
-  public List<MemMetricResponse> getTestMemMetric() {
-    return metricRepository.queryMemMetric("2024-07-18T05:50:00Z", "2024-07-18T06:55:00Z");
-  }
 }
