@@ -2,7 +2,7 @@ package com.terra.cpu.schedule;
 
 import com.terra.cpu.domain.CpuMetric;
 import com.terra.cpu.domain.MemMetric;
-import com.terra.cpu.service.MetricService;
+import com.terra.cpu.repository.MetricRepository;
 import com.terra.cpu.service.SystemStatsInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MetricCollector {
 
-  private final MetricService metricService;
+  private final MetricRepository metricRepository;
   private final SystemStatsInfo systemStatsInfo;
 
   @Scheduled(fixedDelay = 60000)
@@ -22,8 +22,8 @@ public class MetricCollector {
     CpuMetric cpuMetric = systemStatsInfo.getCpuMetric();
     MemMetric memMetric = systemStatsInfo.getMemMetric();
 
-    metricService.saveMetric(cpuMetric);
-    metricService.saveMetric(memMetric);
+    metricRepository.saveMetric(cpuMetric);
+    metricRepository.saveMetric(memMetric);
   }
 
 }

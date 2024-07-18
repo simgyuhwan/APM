@@ -3,5 +3,9 @@ package com.terra.cpu.domain;
 public enum MetricType {
   CPU,
   MEMORY,
-  DISK
+  DISK;
+
+  public String lowerCaseName() {
+    return name().toLowerCase();
+  }
 }

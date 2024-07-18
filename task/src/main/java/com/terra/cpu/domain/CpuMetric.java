@@ -18,6 +18,10 @@ public record CpuMetric(MetricType type, BigDecimal cpuUsage, BigDecimal cpuLoad
     this(MetricType.CPU, cpuUsage, cpuLoad, System.currentTimeMillis());
   }
 
+  public CpuMetric(BigDecimal cpuUsage, BigDecimal cpuLoad, long timestamp) {
+    this(MetricType.CPU, cpuUsage, cpuLoad, timestamp);
+  }
+
   public Point toPont() {
     return Point.measurement(type.name().toLowerCase())
         .time(timestamp, WritePrecision.MS)
