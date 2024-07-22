@@ -4,187 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>APM Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <h1>APM Dashboard</h1>
-<div>
+<div class="controls">
   <label for="start">Start:</label>
   <input type="datetime-local" id="start" name="start">
   <label for="stop">Stop:</label>
   <input type="datetime-local" id="stop" name="stop">
   <button onclick="loadHistoricalData()">Load Data</button>
 </div>
-<div>
-  <canvas id="memoryChart"></canvas>
+<div class="charts">
+  <div class="chart-container">
+    <canvas id="memoryLineChart"></canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="cpuLineChart"></canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="memoryPieChart"></canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="cpuPieChart"></canvas>
+  </div>
 </div>
-<div>
-  <canvas id="cpuChart"></canvas>
-</div>
 
-<script>
-  const memoryCtx = document.getElementById('memoryChart').getContext('2d');
-  const cpuCtx = document.getElementById('cpuChart').getContext('2d');
-
-  const memoryChart = new Chart(memoryCtx, {
-    type: 'line',
-    data: {
-      labels: [],
-      datasets: [
-        {
-          label: 'Total Memory',
-          data: [],
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
-          fill: false
-        },
-        {
-          label: 'Used Memory',
-          data: [],
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1,
-          fill: false
-        },
-        {
-          label: 'Free Memory',
-          data: [],
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1,
-          fill: false
-        },
-        {
-          label: 'Used Percent',
-          data: [],
-          borderColor: 'rgba(153, 102, 255, 1)',
-          borderWidth: 1,
-          fill: false
-        }
-      ]
-    },
-    options: {
-      scales: {
-        x: {
-          type: 'time',
-          time: {
-            unit: 'minute'
-          }
-        },
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-  const cpuChart = new Chart(cpuCtx, {
-    type: 'line',
-    data: {
-      labels: [],
-      datasets: [
-        {
-          label: 'CPU Usage',
-          data: [],
-          borderColor: 'rgba(255, 206, 86, 1)',
-          borderWidth: 1,
-          fill: false
-        },
-        {
-          label: 'CPU Load',
-          data: [],
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
-          fill: false
-        }
-      ]
-    },
-    options: {
-      scales: {
-        x: {
-          type: 'time',
-          time: {
-            unit: 'minute'
-          }
-        },
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-  const socket = new WebSocket('ws://localhost:8080/metrics');
-
-  socket.onmessage = function (event) {
-    const data = JSON.parse(event.data);
-
-    if (data.totalMem !== undefined) {
-      updateMemoryChart(data);
-    } else if (data.cpuUsage !== undefined) {
-      updateCpuChart(data);
-    }
-  };
-
-  function updateMemoryChart(data) {
-    memoryChart.data.labels.push(data.date);
-    memoryChart.data.datasets[0].data.push(data.totalMem);
-    memoryChart.data.datasets[1].data.push(data.usedMem);
-    memoryChart.data.datasets[2].data.push(data.freeMem);
-    memoryChart.data.datasets[3].data.push(data.usedPercent);
-    memoryChart.update();
-  }
-
-  function updateCpuChart(data) {
-    cpuChart.data.labels.push(data.date);
-    cpuChart.data.datasets[0].data.push(data.cpuUsage);
-    cpuChart.data.datasets[1].data.push(data.cpuLoad);
-    cpuChart.update();
-  }
-
-  function loadHistoricalData() {
-    const start = document.getElementById('start').value;
-    const stop = document.getElementById('stop').value;
-
-    if (!start || !stop) {
-      alert('Please select both start and stop times');
-      return;
-    }
-
-    fetch(`/metrics/memory?start=${start}&stop=${stop}`)
-    .then(response => response.json())
-    .then(data => {
-      memoryChart.data.labels = [];
-      memoryChart.data.datasets.forEach(dataset => {
-        dataset.data = [];
-      });
-
-      data.forEach(metric => {
-        memoryChart.data.labels.push(metric.date);
-        memoryChart.data.datasets[0].data.push(metric.totalMem);
-        memoryChart.data.datasets[1].data.push(metric.usedMem);
-        memoryChart.data.datasets[2].data.push(metric.freeMem);
-        memoryChart.data.datasets[3].data.push(metric.usedPercent);
-      });
-
-      memoryChart.update();
-    });
-
-    fetch(`/metrics/cpu?start=${start}&stop=${stop}`)
-    .then(response => response.json())
-    .then(data => {
-      cpuChart.data.labels = [];
-      cpuChart.data.datasets.forEach(dataset => {
-        dataset.data = [];
-      });
-
-      data.forEach(metric => {
-        cpuChart.data.labels.push(metric.date);
-        cpuChart.data.datasets[0].data.push(metric.cpuUsage);
-        cpuChart.data.datasets[1].data.push(metric.cpuLoad);
-      });
-
-      cpuChart.update();
-    });
-  }
-</script>
+<script src="scripts.js"></script>
 </body>
 </html>
