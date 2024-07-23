@@ -6,15 +6,21 @@
   <title>APM Dashboard</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script
+      src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 </head>
 <body>
 <h1>APM Dashboard</h1>
 <div class="controls">
   <label for="start">Start:</label>
-  <input type="datetime-local" id="start" name="start">
+  <div class="date-time-input">
+    <input type="datetime-local" id="start" name="start" class="custom-datetime-input">
+  </div>
   <label for="stop">Stop:</label>
-  <input type="datetime-local" id="stop" name="stop">
-  <button onclick="loadHistoricalData()">Load Data</button>
+  <div class="date-time-input">
+    <input type="datetime-local" id="stop" name="stop" class="custom-datetime-input">
+  </div>
+  <button onclick="loadHistoricalData()" class="custom-button">Load Data</button>
 </div>
 <div class="charts">
   <div class="chart-container">
@@ -30,7 +36,7 @@
     <canvas id="cpuPieChart"></canvas>
   </div>
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="scripts.js"></script>
 </body>
 </html>

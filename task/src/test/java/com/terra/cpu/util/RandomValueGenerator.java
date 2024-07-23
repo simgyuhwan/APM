@@ -1,4 +1,4 @@
-package com.terra.task.cpu.util;
+package com.terra.cpu.util;
 
 import java.math.BigDecimal;
 import java.util.Random;

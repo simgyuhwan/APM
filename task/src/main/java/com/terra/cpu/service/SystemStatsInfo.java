@@ -3,7 +3,6 @@ package com.terra.cpu.service;
 import com.sun.management.OperatingSystemMXBean;
 import com.terra.cpu.domain.CpuMetric;
 import com.terra.cpu.domain.MemMetric;
-import com.terra.cpu.repository.CpuUsageRepository;
 import java.lang.management.ManagementFactory;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,7 +13,7 @@ public class SystemStatsInfo {
 
   private final OperatingSystemMXBean systemMXBean;
 
-  public SystemStatsInfo(CpuUsageRepository cpuUsageRepository) {
+  public SystemStatsInfo() {
     this.systemMXBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
   }
 
@@ -26,7 +25,7 @@ public class SystemStatsInfo {
   public CpuMetric getCpuMetric() {
     double cpuLoad = systemMXBean.getCpuLoad();
     BigDecimal cpuUsage = getCpuUsage();
-    return new CpuMetric(cpuUsage, new BigDecimal(cpuLoad));
+    return new CpuMetric(cpuUsage, BigDecimal.valueOf(cpuLoad));
   }
 
   public MemMetric getMemMetric() {
@@ -39,6 +38,6 @@ public class SystemStatsInfo {
   }
 
   private BigDecimal toBigDecimal(double value) {
-    return new BigDecimal(value).setScale(2, RoundingMode.HALF_UP);
+    return BigDecimal.valueOf(value).setScale(2, RoundingMode.HALF_UP);
   }
 }

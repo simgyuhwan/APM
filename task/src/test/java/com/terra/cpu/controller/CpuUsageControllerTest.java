@@ -1,4 +1,4 @@
-package com.terra.task.cpu.controller;
+package com.terra.cpu.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -6,11 +6,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.terra.cpu.ControllerTestSupport;
 import com.terra.cpu.domain.CpuStats;
 import com.terra.cpu.service.CpuUsageRsp;
 import com.terra.cpu.service.CpuUsageService;
 import com.terra.cpu.service.SystemStatsInfo;
-import com.terra.task.cpu.ControllerTestSupport;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;

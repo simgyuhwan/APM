@@ -116,7 +116,7 @@ const cpuPieChart = new Chart(cpuPieCtx, {
   }
 });
 
-const socket = new WebSocket('ws://localhost:8080/metrics');
+const socket = new WebSocket('ws://localhost:8888/metrics');
 
 socket.onmessage = function (event) {
   const data = JSON.parse(event.data);
@@ -151,21 +151,22 @@ function updateCpuCharts(data) {
 }
 
 function loadHistoricalData() {
-  const start = document.getElementById('start').value;
-  const stop = document.getElementById('stop').value;
+  const start = new Date(document.getElementById('start').value).toISOString();
+  const stop = new Date(document.getElementById('stop').value).toISOString();
 
   if (!start || !stop) {
     alert('Please select both start and stop times');
     return;
   }
 
-  fetch(`/metrics/memory?start=${start}&stop=${stop}`)
+  fetch(`/metrics/mem?start=${start}&stop=${stop}`)
   .then(response => response.json())
   .then(data => {
     memoryLineChart.data.labels = [];
-    memoryLineChart.data.datasets.forEach(dataset => {
-      dataset.data = [];
-    });
+    memoryLineChart.data.datasets[0].data = [];
+    memoryLineChart.data.datasets[1].data = [];
+    memoryLineChart.data.datasets[2].data = [];
+    memoryLineChart.data.datasets[3].data = [];
 
     data.forEach(metric => {
       memoryLineChart.data.labels.push(metric.date);
@@ -182,9 +183,8 @@ function loadHistoricalData() {
   .then(response => response.json())
   .then(data => {
     cpuLineChart.data.labels = [];
-    cpuLineChart.data.datasets.forEach(dataset => {
-      dataset.data = [];
-    });
+    cpuLineChart.data.datasets[0].data = [];
+    cpuLineChart.data.datasets[1].data = [];
 
     data.forEach(metric => {
       cpuLineChart.data.labels.push(metric.date);

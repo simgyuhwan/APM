@@ -1,11 +1,10 @@
-package com.terra.task.cpu.repository;
+package com.terra.cpu.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.terra.cpu.domain.CpuStats;
 import com.terra.cpu.domain.CpuUsage;
-import com.terra.cpu.repository.CpuUsageRepository;
-import com.terra.task.cpu.util.DataSQLGenerator;
+import com.terra.cpu.util.DataSQLGenerator;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;

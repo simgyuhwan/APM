@@ -9,6 +9,7 @@ import com.terra.cpu.domain.Metric;
 import com.terra.cpu.domain.MetricType;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class InfluxDBMetricRepository implements MetricRepository {
         metrics.add(cpuMetric);
       }
     }
-
+    metrics.sort(Comparator.comparing(CpuMetricResponse::date));
     return metrics;
   }
 
@@ -110,6 +111,7 @@ public class InfluxDBMetricRepository implements MetricRepository {
       metrics.add(memMetric);
     }
 
+    metrics.sort(Comparator.comparing(MemMetricResponse::date));
     return metrics;
   }
 }

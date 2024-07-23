@@ -1,4 +1,4 @@
-package com.terra.task.cpu.service;
+package com.terra.cpu.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -9,8 +9,6 @@ import com.terra.cpu.domain.CpuStats;
 import com.terra.cpu.domain.CpuUsage;
 import com.terra.cpu.exception.InvalidDateRangeException;
 import com.terra.cpu.repository.CpuUsageRepository;
-import com.terra.cpu.service.CpuUsageRsp;
-import com.terra.cpu.service.CpuUsageService;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

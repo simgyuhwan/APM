@@ -1,5 +1,7 @@
-package com.terra.cpu.controller.response;
+package com.terra.cpu.controller;
 
+import com.terra.cpu.controller.response.CpuMetricResponse;
+import com.terra.cpu.controller.response.MemMetricResponse;
 import com.terra.cpu.repository.MetricRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +20,13 @@ public class MetricsController {
 
   @GetMapping("/cpu")
   public List<CpuMetricResponse> getTestCpuMetric(@RequestParam("start") String start,
-      @RequestParam("end") String end) {
-    return metricRepository.queryCpuMetric(start, end);
+      @RequestParam("stop") String stop) {
+    return metricRepository.queryCpuMetric(start, stop);
   }
 
   @GetMapping("/mem")
   public List<MemMetricResponse> getTestMemMetric(@RequestParam("start") String start,
-      @RequestParam("end") String end) {
-    return metricRepository.queryMemMetric(start, end);
+      @RequestParam("stop") String stop) {
+    return metricRepository.queryMemMetric(start, stop);
   }
 }
