@@ -38,6 +38,7 @@ h1 {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center
 }
 
 .date-time-input {
@@ -54,8 +55,8 @@ h1 {
 }
 
 .custom-button {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 5px 10px;
+  font-size: 14px;
   background-color: #4CAF50;
   color: white;
   border: none;

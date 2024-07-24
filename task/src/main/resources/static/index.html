@@ -11,22 +11,29 @@
 </head>
 <body>
 <h1>APM Dashboard</h1>
-<div class="controls">
-  <label for="start">Start:</label>
-  <div class="date-time-input">
-    <input type="datetime-local" id="start" name="start" class="custom-datetime-input">
-  </div>
-  <label for="stop">Stop:</label>
-  <div class="date-time-input">
-    <input type="datetime-local" id="stop" name="stop" class="custom-datetime-input">
-  </div>
-  <button onclick="loadHistoricalData()" class="custom-button">Load Data</button>
-</div>
 <div class="charts">
   <div class="chart-container">
+    <div class="time-range-buttons">
+      <button onclick="loadMemoryData('1h')" class="custom-button">1 Hour</button>
+      <button onclick="loadMemoryData('3h')" class="custom-button">3 Hours</button>
+      <button onclick="loadMemoryData('6h')" class="custom-button">6 Hours</button>
+      <button onclick="loadMemoryData('12h')" class="custom-button">12 Hours</button>
+      <button onclick="loadMemoryData('24h')" class="custom-button">24 Hours</button>
+      <button onclick="loadMemoryData('7d')" class="custom-button">7 Days</button>
+      <button onclick="loadMemoryData('30d')" class="custom-button">30 Days</button>
+    </div>
     <canvas id="memoryLineChart"></canvas>
   </div>
   <div class="chart-container">
+    <div class="time-range-buttons">
+      <button onclick="loadCPUData('1h')" class="custom-button">1 Hour</button>
+      <button onclick="loadCPUData('3h')" class="custom-button">3 Hours</button>
+      <button onclick="loadCPUData('6h')" class="custom-button">6 Hours</button>
+      <button onclick="loadCPUData('12h')" class="custom-button">12 Hours</button>
+      <button onclick="loadCPUData('24h')" class="custom-button">24 Hours</button>
+      <button onclick="loadCPUData('7d')" class="custom-button">7 Days</button>
+      <button onclick="loadCPUData('30d')" class="custom-button">30 Days</button>
+    </div>
     <canvas id="cpuLineChart"></canvas>
   </div>
   <div class="chart-container">
