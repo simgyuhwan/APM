@@ -150,16 +150,10 @@ function updateCpuCharts(data) {
   cpuPieChart.update();
 }
 
-function loadHistoricalData() {
-  const start = new Date(document.getElementById('start').value).toISOString();
-  const stop = new Date(document.getElementById('stop').value).toISOString();
+//
 
-  if (!start || !stop) {
-    alert('Please select both start and stop times');
-    return;
-  }
-
-  fetch(`/metrics/mem?start=${start}&stop=${stop}`)
+function loadMemoryDate(timeRange) {
+  fetch(`v1/metrics/mem?timeRange=${timeRange}`)
   .then(response => response.json())
   .then(data => {
     memoryLineChart.data.labels = [];
@@ -174,12 +168,14 @@ function loadHistoricalData() {
       memoryLineChart.data.datasets[1].data.push(metric.usedMem);
       memoryLineChart.data.datasets[2].data.push(metric.freeMem);
       memoryLineChart.data.datasets[3].data.push(metric.usedPercent);
-    });
+    })
 
     memoryLineChart.update();
-  });
+  })
+}
 
-  fetch(`/metrics/cpu?start=${start}&stop=${stop}`)
+function loadCPUDate(timeRange) {
+  fetch(`v1/metrics/cpu?timeRange=${timeRange}`)
   .then(response => response.json())
   .then(data => {
     cpuLineChart.data.labels = [];
@@ -195,3 +191,51 @@ function loadHistoricalData() {
     cpuLineChart.update();
   });
 }
+
+// 날짜 범위 조회 보류
+// function loadHistoricalData() {
+//   const start = new Date(document.getElementById('start').value).toISOString();
+//   const stop = new Date(document.getElementById('stop').value).toISOString();
+//
+//   if (!start || !stop) {
+//     alert('Please select both start and stop times');
+//     return;
+//   }
+//
+//   fetch(`/metrics/mem?start=${start}&stop=${stop}`)
+//   .then(response => response.json())
+//   .then(data => {
+//     memoryLineChart.data.labels = [];
+//     memoryLineChart.data.datasets[0].data = [];
+//     memoryLineChart.data.datasets[1].data = [];
+//     memoryLineChart.data.datasets[2].data = [];
+//     memoryLineChart.data.datasets[3].data = [];
+//
+//     data.forEach(metric => {
+//       memoryLineChart.data.labels.push(metric.date);
+//       memoryLineChart.data.datasets[0].data.push(metric.totalMem);
+//       memoryLineChart.data.datasets[1].data.push(metric.usedMem);
+//       memoryLineChart.data.datasets[2].data.push(metric.freeMem);
+//       memoryLineChart.data.datasets[3].data.push(metric.usedPercent);
+//     });
+//
+//     memoryLineChart.update();
+//   });
+//
+//   fetch(`/metrics/cpu?start=${start}&stop=${stop}`)
+//   .then(response => response.json())
+//   .then(data => {
+//     cpuLineChart.data.labels = [];
+//     cpuLineChart.data.datasets[0].data = [];
+//     cpuLineChart.data.datasets[1].data = [];
+//
+//     data.forEach(metric => {
+//       cpuLineChart.data.labels.push(metric.date);
+//       cpuLineChart.data.datasets[0].data.push(metric.cpuUsage);
+//       cpuLineChart.data.datasets[1].data.push(metric.cpuLoad);
+//     });
+//
+//     cpuLineChart.update();
+//   });
+//
+// }

@@ -1,4 +1,4 @@
-package com.terra.cpu.util;
+package com.terra.cpu.common;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

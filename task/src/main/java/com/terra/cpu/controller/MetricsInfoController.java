@@ -1,9 +1,9 @@
 package com.terra.cpu.controller;
 
-import com.terra.cpu.controller.response.CpuMetricResponse;
-import com.terra.cpu.controller.response.MemMetricResponse;
-import com.terra.cpu.domain.TimeRange;
+import com.terra.cpu.domain.CpuEntity;
+import com.terra.cpu.domain.MemEntity;
 import com.terra.cpu.repository.MetricRepository;
+import com.terra.cpu.service.MetricsService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,18 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class MetricsInfoController {
 
   private final MetricRepository metricRepository;
-
+  private final MetricsService metricsService;
 
   @GetMapping("/cpu")
-  public List<CpuMetricResponse> getCpuMetric(@RequestParam("timeRange") String timeRange) {
-    TimeRange range = TimeRange.of(timeRange);
-    return metricRepository.queryCpuMetric(range);
+  public List<CpuEntity> getCpuMetric(@RequestParam("timeRange") String timeRange) {
+    return metricsService.getCpuMetric(timeRange);
   }
 
   @GetMapping("/mem")
-  public List<MemMetricResponse> getMemMetric(@RequestParam("timeRange") String timeRange) {
-    TimeRange range = TimeRange.of(timeRange);
-    return metricRepository.queryMemMetric(range);
+  public List<MemEntity> getMemMetric(@RequestParam("timeRange") String timeRange) {
+    return metricsService.getMemMetric(timeRange);
   }
 
 }

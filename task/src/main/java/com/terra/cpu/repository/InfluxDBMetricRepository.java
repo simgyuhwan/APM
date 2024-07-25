@@ -3,11 +3,11 @@ package com.terra.cpu.repository;
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.query.FluxRecord;
 import com.influxdb.query.FluxTable;
+import com.terra.cpu.common.influxdb.query.MeasurementType;
+import com.terra.cpu.common.influxdb.query.TimeRangeType;
 import com.terra.cpu.controller.response.CpuMetricResponse;
 import com.terra.cpu.controller.response.MemMetricResponse;
 import com.terra.cpu.domain.Metric;
-import com.terra.cpu.domain.MetricType;
-import com.terra.cpu.domain.TimeRange;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -23,11 +23,14 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class InfluxDBMetricRepository implements MetricRepository {
 
+  @Value("${influxdb.bucket}")
+  private String bucket;
+
   @Override
-  public List<CpuMetricResponse> queryCpuMetric(TimeRange type) {
+  public List<CpuMetricResponse> queryCpuMetric(TimeRangeType type) {
     String fluxQuery = String.format(
         "from(bucket: \"%s\") |> range(start: -%s,) |> filter(fn: (r) => r._measurement == \"%s\")",
-        bucket, type.getValue(), MetricType.CPU.lowerCaseName());
+        bucket, type.getValue(), MeasurementType.CPU.lowerCaseName());
 
     List<FluxTable> tables = influxDBClient.getQueryApi().query(fluxQuery);
     Map<String, BigDecimal> cpuUsageMap = new HashMap<>();
@@ -60,10 +63,10 @@ public class InfluxDBMetricRepository implements MetricRepository {
   }
 
   @Override
-  public List<MemMetricResponse> queryMemMetric(TimeRange type) {
+  public List<MemMetricResponse> queryMemMetric(TimeRangeType type) {
     String fluxQuery = String.format(
         "from(bucket: \"%s\") |> range(start: -%s) |> filter(fn: (r) => r._measurement == \"%s\")",
-        bucket, type.getValue(), MetricType.MEMORY.lowerCaseName());
+        bucket, type.getValue(), MeasurementType.MEMORY.lowerCaseName());
 
     List<FluxTable> tables = influxDBClient.getQueryApi().query(fluxQuery);
 
@@ -108,8 +111,6 @@ public class InfluxDBMetricRepository implements MetricRepository {
 
   private final InfluxDBClient influxDBClient;
 
-  @Value("${influxdb.bucket}")
-  private String bucket;
 
   @Override
   public void saveMetric(Metric metric) {
@@ -120,7 +121,7 @@ public class InfluxDBMetricRepository implements MetricRepository {
   public List<CpuMetricResponse> queryCpuMetric(String start, String stop) {
     String fluxQuery = String.format(
         "from(bucket: \"%s\") |> range(start: %s, stop: %s) |> filter(fn: (r) => r._measurement == \"%s\")",
-        bucket, start, stop, MetricType.CPU.lowerCaseName());
+        bucket, start, stop, MeasurementType.CPU.toInfluxDBFormat());
 
     List<FluxTable> tables = influxDBClient.getQueryApi().query(fluxQuery);
     Map<String, BigDecimal> cpuUsageMap = new HashMap<>();
@@ -156,7 +157,7 @@ public class InfluxDBMetricRepository implements MetricRepository {
   public List<MemMetricResponse> queryMemMetric(String start, String stop) {
     String fluxQuery = String.format(
         "from(bucket: \"%s\") |> range(start: %s, stop: %s) |> filter(fn: (r) => r._measurement == \"%s\")",
-        bucket, start, stop, MetricType.MEMORY.lowerCaseName());
+        bucket, start, stop, MeasurementType.MEMORY.lowerCaseName());
 
     List<FluxTable> tables = influxDBClient.getQueryApi().query(fluxQuery);
 

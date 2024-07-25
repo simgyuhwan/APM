@@ -2,25 +2,16 @@ package com.terra.cpu.domain;
 
 import com.influxdb.client.domain.WritePrecision;
 import com.influxdb.client.write.Point;
+import com.terra.cpu.common.influxdb.query.MeasurementType;
 import java.math.BigDecimal;
 
-public record DiskMetric(MetricType type, BigDecimal totalSpace, BigDecimal usedSpace,
+public record DiskMetric(MeasurementType type, BigDecimal totalSpace, BigDecimal usedSpace,
                          BigDecimal freeSpace, BigDecimal usedPercent, long timestamp) implements
     Metric {
 
-  public DiskMetric(MetricType type, BigDecimal totalSpace, BigDecimal usedSpace,
-      BigDecimal freeSpace, BigDecimal usedPercent, long timestamp) {
-    this.type = type;
-    this.totalSpace = totalSpace;
-    this.usedSpace = usedSpace;
-    this.freeSpace = freeSpace;
-    this.usedPercent = usedPercent;
-    this.timestamp = timestamp;
-  }
-
   public DiskMetric(BigDecimal totalSpace, BigDecimal usedSpace, BigDecimal freeSpace,
       BigDecimal usedPercent) {
-    this(MetricType.DISK, totalSpace, usedSpace, freeSpace, usedPercent,
+    this(MeasurementType.DISK, totalSpace, usedSpace, freeSpace, usedPercent,
         System.currentTimeMillis());
   }
 
