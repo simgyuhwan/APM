@@ -37,6 +37,12 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    // websocket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    // influxDB
+    implementation group: 'com.influxdb', name: 'influxdb-client-java', version: '7.1.0'
+
     // restdocs
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
@@ -45,6 +51,7 @@ dependencies {
     // openapi
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
 
+    // junit5
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     // test container

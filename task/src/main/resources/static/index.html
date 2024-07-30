@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APM Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <script
+      src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+<body>
+<h1>APM Dashboard</h1>
+<div class="charts">
+  <div class="chart-container">
+    <h3>실시간 Memory 사용률</h3>
+    <canvas id="realTimeMemoryChart"></canvas>
+  </div>
+  <div class="chart-container">
+    <h3>실시간 CPU 사용률</h3>
+    <canvas id="realTimeCpuChart"></canvas>
+  </div>
+  <div class="chart-container">
+    <h3>Memory 사용률</h3>
+    <div class="time-range-buttons">
+      <button onclick="loadMemoryData('1h')" class="custom-button">1 Hour</button>
+      <button onclick="loadMemoryData('3h')" class="custom-button">3 Hours</button>
+      <button onclick="loadMemoryData('6h')" class="custom-button">6 Hours</button>
+      <button onclick="loadMemoryData('12h')" class="custom-button">12 Hours</button>
+      <button onclick="loadMemoryData('24h')" class="custom-button">24 Hours</button>
+      <button onclick="loadMemoryData('7d')" class="custom-button">7 Days</button>
+      <button onclick="loadMemoryData('30d')" class="custom-button">30 Days</button>
+    </div>
+    <canvas id="memoryLineChart"></canvas>
+  </div>
+  <div class="chart-container">
+    <h3>CPU 사용률</h3>
+    <div class="time-range-buttons">
+      <button onclick="loadCPUData('1h')" class="custom-button">1 Hour</button>
+      <button onclick="loadCPUData('3h')" class="custom-button">3 Hours</button>
+      <button onclick="loadCPUData('6h')" class="custom-button">6 Hours</button>
+      <button onclick="loadCPUData('12h')" class="custom-button">12 Hours</button>
+      <button onclick="loadCPUData('24h')" class="custom-button">24 Hours</button>
+      <button onclick="loadCPUData('7d')" class="custom-button">7 Days</button>
+      <button onclick="loadCPUData('30d')" class="custom-button">30 Days</button>
+    </div>
+    <canvas id="cpuLineChart"></canvas>
+  </div>
+</div>
+<div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="scripts.js"></script>
+</body>
+</html>

@@ -27,3 +27,11 @@ springdoc:
   swagger-ui:
     path: /swagger-ui
     groups-order: asc
+
+influxdb:
+  url: http://localhost:8086
+  username: admin
+  password: Password!
+  org: apm-org
+  bucket: apm-bucket
+  token: HnJNyb1tBJJFacUdba8i7nCLMqjTwoS0ts2A4X_QgNzWCJlsw0MFVSbqdCooZuRb1XQn_LfQzxrNq-25y1wJaQ==
