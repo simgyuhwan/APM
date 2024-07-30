@@ -17,7 +17,7 @@ const memoryLineChart = new Chart(memoryLineCtx, {
       {
         label: 'Total Memory',
         data: [],
-        borderColor: 'rgba(75, 192, 192, 1)',
+        borderColor: 'rgba(255, 99, 71, 1)',
         borderWidth: borderWidthValue,
         pointRadius: pointRadiusPixel,
         tension: tensionValue,
@@ -26,7 +26,7 @@ const memoryLineChart = new Chart(memoryLineCtx, {
       {
         label: 'Used Memory',
         data: [],
-        borderColor: 'rgba(255, 99, 132, 1)',
+        borderColor: 'rgba(60, 179, 113, 1)',
         borderWidth: borderWidthValue,
         pointRadius: pointRadiusPixel,
         tension: tensionValue,
@@ -35,7 +35,7 @@ const memoryLineChart = new Chart(memoryLineCtx, {
       {
         label: 'Free Memory',
         data: [],
-        borderColor: 'rgba(54, 162, 235, 1)',
+        borderColor: 'rgba(30, 144, 255, 1)',
         borderWidth: borderWidthValue,
         pointRadius: pointRadiusPixel,
         tension: tensionValue,
@@ -44,7 +44,7 @@ const memoryLineChart = new Chart(memoryLineCtx, {
       {
         label: 'Used Percent',
         data: [],
-        borderColor: 'rgba(153, 102, 255, 1)',
+        borderColor: 'rgba(255, 165, 0, 1)',
         borderWidth: borderWidthValue,
         fill: false,
         tension: tensionValue,
@@ -115,7 +115,7 @@ const realTimeMemoryChart = new Chart(realTimeMemoryLineCtx, {
       {
         label: 'Total Memory',
         data: [],
-        borderColor: 'rgba(75, 192, 192, 1)',
+        borderColor: 'rgba(255, 99, 71, 1)',
         borderWidth: borderWidthValue,
         pointRadius: pointRadiusPixel,
         tension: tensionValue,
@@ -124,7 +124,7 @@ const realTimeMemoryChart = new Chart(realTimeMemoryLineCtx, {
       {
         label: 'Used Memory',
         data: [],
-        borderColor: 'rgba(255, 99, 132, 1)',
+        borderColor: 'rgba(60, 179, 113, 1)',
         borderWidth: borderWidthValue,
         pointRadius: pointRadiusPixel,
         tension: tensionValue,
@@ -133,7 +133,7 @@ const realTimeMemoryChart = new Chart(realTimeMemoryLineCtx, {
       {
         label: 'Free Memory',
         data: [],
-        borderColor: 'rgba(54, 162, 235, 1)',
+        borderColor: 'rgba(30, 144, 255, 1)',
         borderWidth: borderWidthValue,
         pointRadius: pointRadiusPixel,
         tension: tensionValue,
@@ -142,7 +142,7 @@ const realTimeMemoryChart = new Chart(realTimeMemoryLineCtx, {
       {
         label: 'Used Percent',
         data: [],
-        borderColor: 'rgba(153, 102, 255, 1)',
+        borderColor: 'rgba(255, 165, 0, 1)',
         borderWidth: borderWidthValue,
         fill: false,
         tension: tensionValue,
@@ -316,8 +316,28 @@ function connect() {
       const metricsData = JSON.parse(data.body);
       updateRealTimeCpuData(metricsData.cpuMetricResponse);
       updateRealTimeMemData(metricsData.memMetricResponse);
+      updateCpuMemData(metricsData);
     });
   });
+}
+
+function updateCpuMemData(metricsData) {
+
+  const cpuUsage = metricsData.cpuMetricResponse.cpuUsage;
+  const cpuLoad = metricsData.cpuMetricResponse.cpuLoad.toFixed(3);
+  const totalMem = metricsData.memMetricResponse.totalMem;
+  const usedMem = metricsData.memMetricResponse.usedMem;
+  const freeMem = metricsData.memMetricResponse.freeMem;
+  const usedPercent = metricsData.memMetricResponse.usedPercent;
+
+  document.getElementById('totalMem').innerText = totalMem + ' MB';
+  document.getElementById('usedMem').innerText = usedMem + ' MB';
+  document.getElementById('freeMem').innerText = freeMem + ' MB';
+  document.getElementById('usedPercent').innerText = usedPercent
+      + ' %';
+  document.getElementById('cpuUsage').innerText = cpuUsage + ' %';
+  document.getElementById('cpuLoad').innerText = cpuLoad;
+
 }
 
 function updateRealTimeCpuData(cpuData) {

@@ -63,3 +63,26 @@ h1 {
   border-radius: 4px;
   cursor: pointer;
 }
+
+.real-time-info {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+/* 각 정보 박스 스타일 */
+.info-box {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  transition: transform 0.3s;
+  margin: 0 10px; /* 좌우 간격을 줄여서 가까워지도록 설정 */
+}
+
+.info-box:hover {
+  transform: scale(1.05);
+}
