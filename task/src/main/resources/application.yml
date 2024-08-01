@@ -1,19 +1,6 @@
 server:
   port: 9898
 
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: Password!
-    url: jdbc:mysql://localhost:3306/terra
-  jpa:
-    generate-ddl: true
-    hibernate:
-      ddl-auto: update
-    database: mysql
-    show-sql: true
-
 logging:
   level:
     org.hibernate.SQL: debug
