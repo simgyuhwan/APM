@@ -28,10 +28,9 @@ public class MetricCollector {
     MemMetric memMetric = systemStatsInfo.getMemMetric();
 
     saveMetrics(cpuMetric, memMetric);
-//    sendRealTimeMetrics(cpuMetric, memMetric);
   }
 
-  @Scheduled(fixedDelay = 1000)
+  @Scheduled(fixedDelayString = "${metrics.scheduling.fixed-delay}")
   public void sendMetrics() {
     CpuMetric cpuMetric = systemStatsInfo.getCpuMetric();
     MemMetric memMetric = systemStatsInfo.getMemMetric();
