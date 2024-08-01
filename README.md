@@ -25,29 +25,26 @@
     ```bash
    > git clone https://github.com/simgyuhwan/APM
    > cd task
-   > docker-compose -f ./docker-compose.yml up
-   > gradle clean build
-   > java -jar /build/libs/task-0.0.1-SNAPSHOT.jar
     ```
 
 2. **InfluxDB 설정**:
-    - Docker를 사용하여 InfluxDB를 시작합니다.
-    - InfluxDB를 시작하고 메트릭을 저장할 데이터베이스를 생성합니다.
+- Docker를 사용하여 InfluxDB를 시작합니다.
    ```base
    > docker-compose -f ./docker-compose.yml up
    ```
+- InfluxDB를 시작하고 메트릭을 저장할 데이터베이스를 생성합니다.
 
-    3. **애플리케이션 구성**:
-    - `application.yaml` 파일을 업데이트하여 InfluxDB 연결 정보를 입력합니다.
-       ```yaml
-       influxdb:
-        url: http://localhost:8086
-        username: admin
-        password: Password!
-        org: apm-org
-        bucket: apm-bucket
-        token: {token-value} 
-       ```
+3. **애플리케이션 구성**:
+- `application.yaml` 파일을 업데이트하여 InfluxDB 연결 정보를 입력합니다.
+   ```yaml
+   influxdb:
+    url: http://localhost:8086
+    username: admin
+    password: Password!
+    org: apm-org
+    bucket: apm-bucket
+    token: {token-value} 
+   ```
 
 4. **서버 빌드 및 실행**:
     ```bash
