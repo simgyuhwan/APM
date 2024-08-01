@@ -8,13 +8,6 @@ import java.math.BigDecimal;
 public record CpuMetric(MeasurementType type, BigDecimal cpuUsage, BigDecimal cpuLoad,
                         long timestamp) implements Metric {
 
-  public CpuMetric(MeasurementType type, BigDecimal cpuUsage, BigDecimal cpuLoad, long timestamp) {
-    this.type = type;
-    this.cpuUsage = cpuUsage;
-    this.cpuLoad = cpuLoad;
-    this.timestamp = timestamp;
-  }
-
   public CpuMetric(BigDecimal cpuUsage, BigDecimal cpuLoad) {
     this(MeasurementType.CPU, cpuUsage, cpuLoad, System.currentTimeMillis());
   }
