@@ -1,7 +1,8 @@
 # APM 서버
 
 ## 개요
-
+![image](./task/images/apm1.png)
+![image](./task/images/apm2.png)
 이 프로젝트는 Spring, WebSocket, JavaScript, Chart.js, InfluxDB를 사용하여 구현된 애플리케이션 성능 모니터링(APM) 서버입니다. 등록된
 클라이언트의 CPU 및 메모리 사용량을 실시간 및 기간별로 모니터링할 수 있습니다.
 
