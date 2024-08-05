@@ -1,1 +1,14 @@
-spring.application.name=client
+server:
+  port: 10101
+
+# influxDB connection
+influxdb:
+  url: http://localhost:8086
+  org: apm-org
+  bucket: apm-bucket
+  token: HnJNyb1tBJJFacUdba8i7nCLMqjTwoS0ts2A4X_QgNzWCJlsw0MFVSbqdCooZuRb1XQn_LfQzxrNq-25y1wJaQ==
+
+# Real time scheduling delay
+metrics:
+  scheduling:
+    fixed-delay: 5000

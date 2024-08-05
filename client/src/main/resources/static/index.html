@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APM 서버 클라이언트</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h1>APM 서버 클라이언트 대시보드</h1>
+    <form id="dbForm" onsubmit="connectToInfluxDB()">
+      <div class="input-group">
+        <label for="urlInput">InfluxDB URL:</label>
+        <input type="text" id="urlInput" placeholder="예: http://localhost:8086">
+      </div>
+      <div class="input-group">
+        <label for="orgInput">Organization:</label>
+        <input type="text" id="orgInput" placeholder="apm-org">
+      </div>
+      <div class="input-group">
+        <label for="bucketInput">Bucket:</label>
+        <input type="text" id="bucketInput" placeholder="apm-bucket">
+      </div>
+      <div class="input-group">
+        <label for="tokenInput">Token:</label>
+        <input type="text" id="tokenInput" placeholder="HnJNyb...">
+      </div>
+      <button type="submit">연결</button>
+    </form>
+    <div id="message" class="message"></div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
