@@ -1,8 +1,7 @@
-package com.terra.cpu.domain;
+package com.apm.client.domain;
 
 import com.influxdb.client.domain.WritePrecision;
 import com.influxdb.client.write.Point;
-import com.terra.cpu.common.influxdb.query.MeasurementType;
 import java.math.BigDecimal;
 
 public record CpuMetric(MeasurementType type, BigDecimal cpuUsage, BigDecimal cpuLoad,
@@ -16,7 +15,8 @@ public record CpuMetric(MeasurementType type, BigDecimal cpuUsage, BigDecimal cp
     this(MeasurementType.CPU, cpuUsage, cpuLoad, timestamp);
   }
 
-  public Point toPont() {
+  @Override
+  public Point toPoint() {
     return Point.measurement(type.name().toLowerCase())
         .time(timestamp, WritePrecision.MS)
         .addField("cpuUsage", cpuUsage)

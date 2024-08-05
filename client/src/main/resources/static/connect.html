@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APM 서버 클라이언트</title>
+  <link rel="stylesheet" href="css/connect_style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+  <h1>APM 서버 클라이언트</h1>
+  <input type="hidden" id="orgInput" value="${org}">
+</div>
+<div class="container">
+  <div class="card">
+    <div class="input-group">
+      <label for="ipInput">서버 IP 주소:</label>
+      <input type="text" id="ipInput" placeholder="예: 192.168.1.100">
+      <button id="connectButton">연결</button>
+    </div>
+    <div id="message" class="message"></div>
+    <button id="collectMetricsButton">Metrics 수집</button>
+    <button id="stopCollectingMetricsButton">수집 중단</button>
+  </div>
+</div>
+
+<script src="js/connect.js"></script>
+</body>
+</html>

@@ -51,12 +51,6 @@ dependencies {
 
     // junit5
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-    // test container
-    testImplementation 'org.testcontainers:testcontainers:1.19.8'
-    testImplementation 'org.testcontainers:junit-jupiter:1.19.8'
-    testImplementation "org.testcontainers:mysql:1.19.2"
-    testImplementation 'org.testcontainers:jdbc:1.19.8'
 }
 
 tasks.named('test') {
